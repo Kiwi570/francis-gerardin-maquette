@@ -11,6 +11,7 @@ Site statique (HTML, CSS, JavaScript), sans étape de construction. Prêt pour V
 - `parcours.html` frise et CV
 - `contact.html` coordonnées et formulaire
 - `mentions-legales.html` modèle à compléter
+- `404.html` page introuvable (servie automatiquement par Vercel)
 
 ## Modifier les contenus
 
@@ -27,3 +28,8 @@ Site statique (HTML, CSS, JavaScript), sans étape de construction. Prêt pour V
 
 GSAP (ScrollTrigger, SplitText, DrawSVG, ScrambleText), Lenis, OGL pour la trame offset WebGL. Tout est hébergé dans `assets/vendor`.
 Le bouton « Mode calme » et le réglage système « réduire les animations » affichent une version complète sans animation.
+
+## Avant la mise en ligne définitive
+
+- Retirer la ligne `<meta name="robots" content="noindex, nofollow">` de chaque page : elle empêche Google d'indexer la maquette.
+- Relier les formulaires à un service d'envoi réel (par exemple Formspree ou une fonction Vercel).

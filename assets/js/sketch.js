@@ -90,7 +90,7 @@ class Pen {
     this.hatch(this.clip(`<polygon points="${pts.map(p => p.join(',')).join(' ')}"/>`), [x, y, Math.max(...xs) - x, Math.max(...ys) - y], f)
   }
   svg(label) {
-    return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${label}"><defs>${this.defs.join('')}</defs>${this.parts.join('')}</svg>`
+    return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><defs>${this.defs.join('')}</defs>${this.parts.join('')}</svg>`
   }
 }
 

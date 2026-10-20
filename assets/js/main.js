@@ -184,7 +184,7 @@ function run() {
   const flip = $('.flip')
   if (flip) {
     if (root.classList.contains('play-flip')) {
-      gsap.fromTo(flip, { yPercent: 0, rotateX: 0 }, { yPercent: -112, rotateX: 14, duration: 0.85, ease: 'power3.inOut', delay: 0.05, onComplete: () => flip.classList.add('is-gone') })
+      gsap.fromTo(flip, { yPercent: 0, rotateX: 0 }, { yPercent: -112, rotateX: 14, duration: 0.7, ease: 'power3.inOut', delay: 0.02, onComplete: () => flip.classList.add('is-gone') })
     }
     $$('a[href]').forEach(a => {
       const href = a.getAttribute('href')
@@ -194,7 +194,7 @@ function run() {
         e.preventDefault()
         store.sset('fg-flip', '1')
         flip.classList.remove('is-gone')
-        gsap.fromTo(flip, { yPercent: 108, rotateX: -12 }, { yPercent: 0, rotateX: 0, duration: 0.6, ease: 'power3.in', onComplete: () => { location.href = href } })
+        gsap.fromTo(flip, { yPercent: 108, rotateX: -12 }, { yPercent: 0, rotateX: 0, duration: 0.45, ease: 'power3.in', onComplete: () => { location.href = href } })
       })
     })
     window.addEventListener('pageshow', e => { if (e.persisted) { gsap.set(flip, { yPercent: -112 }); flip.classList.add('is-gone') } })
@@ -218,7 +218,10 @@ function run() {
       .from('.intro-dots', { scaleX: 0, transformOrigin: 'left center', stagger: 0.2, duration: 0.4 }, 0.35)
       .to('.intro-sheet', { yPercent: -112, rotateX: 16, duration: 0.75, ease: 'power3.inOut' }, 2.05)
       .to(intro, { autoAlpha: 0, duration: 0.3 }, 2.55)
-    $('.intro-skip', intro)?.addEventListener('click', () => tl.progress(1))
+    const skip = () => { if (tl.progress() < 1) tl.progress(1) }
+    intro.addEventListener('click', skip)
+    window.addEventListener('keydown', skip, { once: true })
+    window.addEventListener('wheel', () => { if (tl.time() > 1.2) skip() }, { passive: true, once: true })
   } else {
     intro && intro.remove()
     gsap.delayedCall(root.classList.contains('play-flip') ? 0.45 : 0.1, () => heroStart.play())
@@ -324,7 +327,7 @@ function run() {
 
   /* Tampons et compteurs */
   $$('.stamp').forEach(s => {
-    gsap.from(s, { scale: 1.7, rotate: '-=14', autoAlpha: 0, duration: 0.55, ease: 'back.out(2.2)', scrollTrigger: { trigger: s, start: 'top 92%', once: true } })
+    gsap.from(s, { scale: 1.3, rotate: '-=10', autoAlpha: 0, duration: 0.55, ease: 'back.out(2.2)', scrollTrigger: { trigger: s, start: 'top 92%', once: true } })
   })
   $$('[data-count]').forEach(el => {
     const to = +el.dataset.count, obj = { v: 0 }
@@ -471,6 +474,89 @@ function run() {
     }
   }
 
-  window.addEventListener('load', () => ScrollTrigger.refresh())
+  /* Progression de lecture sous l'en-tête */
+  const prog = $('.hd-progress')
+  if (prog) {
+    const setP = gsap.quickSetter(prog, 'scaleX')
+    gsap.ticker.add(() => { const max = document.documentElement.scrollHeight - innerHeight; setP(max > 0 ? Math.min(1, scrollY / max) : 0) })
+  }
+
+  /* Pied de page : le numéro s'écrit */
+  const ftPhone = $('.ft-phone')
+  if (ftPhone && SplitText) {
+    const sp = new SplitText(ftPhone, { type: 'chars', charsClass: 'char' })
+    const tl = gsap.timeline({ scrollTrigger: { trigger: ftPhone, start: 'top 92%', once: true } })
+    tl.from(sp.chars, { yPercent: 80, rotate: 8, autoAlpha: 0, duration: 0.7, stagger: 0.035, ease: 'back.out(2)' })
+    const sign = $('.ft-sign')
+    sign && tl.from(sign, { clipPath: 'inset(0 100% -20% 0)', duration: 0.9, ease: 'power2.inOut' }, '-=0.3')
+  }
+
+  /* Schéma des bienfaits : il se construit */
+  $$('.schema svg').forEach(svg => {
+    const tl = gsap.timeline({ scrollTrigger: { trigger: svg, start: 'top 75%', once: true } })
+    const pills = $$('.sch-pill', svg), pillTxt = pills.map(r => r.nextElementSibling)
+    tl.from($$('.sch-cap, .sch-cap-t', svg), { autoAlpha: 0, x: -20, duration: 0.5, stagger: 0.08 }, 0)
+      .from(pills.map((r, i) => [r, pillTxt[i]]).flat(), { autoAlpha: 0, x: -24, duration: 0.45, stagger: 0.035, ease: 'power3.out' }, 0.2)
+    tl.from($$('.sch-link', svg), { autoAlpha: 0, duration: 0.5, stagger: 0.03 }, 0.6)
+    tl.from($$('.sch-core, .sch-core-t', svg), { scale: 0.6, autoAlpha: 0, transformOrigin: '620px 350px', duration: 0.6, ease: 'back.out(2.2)' }, 1.1)
+      .from($$('.sch-res, .sch-res-g text', svg), { autoAlpha: 0, x: 24, duration: 0.45, stagger: 0.04, ease: 'power3.out' }, 1.4)
+    tl.from($$('.sch-loop', svg), { autoAlpha: 0, duration: 0.5, stagger: 0.15 }, 1.9)
+  })
+
+  /* Enveloppe de contact : le rabat s'ouvre, la carte sort */
+  $$('.env').forEach(env => {
+    const closed = $('.env-flap-closed', env), open = $('.env-flap-open', env), letter = $('.env-letter', env)
+    closed.style.display = 'block'
+    gsap.set(open, { scaleY: 0, transformOrigin: '50% 100%' })
+    gsap.set(closed, { transformOrigin: '50% 0%' })
+    gsap.set(letter, { y: 175 })
+    const tl = gsap.timeline({ delay: root.classList.contains('play-flip') ? 0.9 : 0.5 })
+    tl.to(closed, { scaleY: 0, duration: 0.45, ease: 'power2.in' })
+      .set(closed, { display: 'none' })
+      .to(open, { scaleY: 1, duration: 0.45, ease: 'power2.out' })
+      .to(letter, { y: 0, duration: 0.9, ease: 'power3.out' }, '-=0.15')
+      .from($$('.env-post', env), { scale: 1.6, autoAlpha: 0, rotate: -40, transformOrigin: '50% 50%', duration: 0.5, ease: 'back.out(2)' }, '-=0.3')
+    gsap.to($('.env-float', env), { y: -6, duration: 2.6, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: 2.4 })
+    if (fine) {
+      env.addEventListener('pointerenter', () => tl.progress() === 1 && gsap.to(letter, { y: -16, duration: 0.5, ease: 'power3.out' }))
+      env.addEventListener('pointerleave', () => tl.progress() === 1 && gsap.to(letter, { y: 0, duration: 0.6, ease: 'power3.out' }))
+    }
+  })
+
+  /* Formats : aperçu qui suit le curseur */
+  $$('[data-flist]').forEach(list => {
+    const pv = $('.fl-preview', list)
+    if (!pv || !fine || !window.matchMedia('(hover: hover) and (min-width: 900px)').matches) return
+    const items = $$('.fl-pv', pv)
+    const xTo = gsap.quickTo(pv, 'x', { duration: 0.55, ease: 'power3.out' }), yTo = gsap.quickTo(pv, 'y', { duration: 0.55, ease: 'power3.out' })
+    const rTo = gsap.quickTo(pv, 'rotation', { duration: 0.8, ease: 'power3.out' })
+    let lastX = 0
+    list.addEventListener('pointermove', e => {
+      const r = list.getBoundingClientRect()
+      const x = e.clientX - r.left, y = e.clientY - r.top
+      xTo(x + 40); yTo(y - pv.offsetHeight / 2); rTo(gsap.utils.clamp(-8, 8, (e.clientX - lastX) * 0.6)); lastX = e.clientX
+    })
+    $$('.fl-row', list).forEach(row => row.addEventListener('pointerenter', () => {
+      items.forEach(it => it.classList.toggle('is-on', it.dataset.fl === row.dataset.fl))
+      gsap.to(pv, { autoAlpha: 1, scale: 1, duration: 0.35, ease: 'power3.out' })
+    }))
+    list.addEventListener('pointerleave', () => gsap.to(pv, { autoAlpha: 0, scale: 0.9, duration: 0.3 }))
+    gsap.set(pv, { scale: 0.9 })
+  })
+
+  /* Arrivée sur une ancre (#date, #devis, #rdv) une fois les sections épinglées en place */
+  const goHash = () => {
+    if (location.hash.length < 2) return
+    const t = document.getElementById(location.hash.slice(1))
+    if (!t) return
+    ScrollTrigger.refresh()
+    const go = () => {
+      if (lenis) { lenis.resize(); lenis.scrollTo(t, { offset: -90, immediate: true, force: true }) } else t.scrollIntoView()
+    }
+    go()
+    setTimeout(() => { if (Math.abs(t.getBoundingClientRect().top - 90) > 40) go() }, 350)
+  }
+
+  window.addEventListener('load', () => { ScrollTrigger.refresh(); setTimeout(goHash, 60) })
   document.fonts && document.fonts.ready.then(() => { ScrollTrigger.refresh(); thread && thread.build() })
 }

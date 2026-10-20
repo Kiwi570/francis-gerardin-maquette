@@ -7,18 +7,21 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Mentions légales du site de Francis Gérardin.">
 <meta name="theme-color" content="#EFEADF">
+<meta name="robots" content="noindex, nofollow">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Mentions légales · Francis Gérardin">
 <meta property="og:description" content="Mentions légales du site de Francis Gérardin.">
 <meta property="og:image" content="assets/img/francis-portrait-sourire-1200.webp">
 <meta property="og:locale" content="fr_FR">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="preload" href="assets/fonts/instrument-serif-regular.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="assets/fonts/newsreader-var.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="assets/fonts/plex-mono-regular.woff" as="font" type="font/woff" crossorigin>
 <link rel="stylesheet" href="assets/css/fonts.css">
 <link rel="stylesheet" href="assets/css/main.css">
 <script>(function(){var d=document.documentElement;d.classList.add('js');try{if(localStorage.getItem('fg-calme')==='1')d.classList.add('is-calm')}catch(e){}var r=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;var still=r||d.classList.contains('is-calm');try{if(!still&&sessionStorage.getItem('fg-flip')==='1')d.classList.add('play-flip');sessionStorage.removeItem('fg-flip')}catch(e){}})();</script>
+
 </head>
 <body>
 <a class="skip" href="#contenu">Aller au contenu</a>
@@ -36,11 +39,12 @@
       <a href="contact.html">Contact</a>
     </nav>
     <div class="hd-tools">
-      <a class="hd-phone" href="tel:+33637551256">06 37 55 12 56</a>
+      <a class="hd-phone" href="tel:+33637551256">06 37 55 12 56</a>
       <button class="calm-btn" type="button" data-calm-toggle aria-pressed="false" title="Réduire les animations"><svg viewBox="0 0 26 12" aria-hidden="true"><path class="wave" d="M1 6 C 5 0, 8 12, 13 6 S 21 0, 25 6"/><path class="flat" d="M1 6 L25 6"/></svg><span class="calm-txt">Mode calme</span></button>
       <button class="hd-burger" type="button" aria-expanded="false" aria-controls="menu-mobile" aria-label="Ouvrir le menu"><span></span><span></span></button>
     </div>
   </div>
+  <span class="hd-progress" aria-hidden="true"></span>
 </header>
 <div class="mm" id="menu-mobile" hidden>
   <nav class="mm-nav" aria-label="Navigation mobile">
@@ -52,17 +56,18 @@
     <a href="contact.html"><span>05</span>Contact</a>
     <a href="mentions-legales.html"><span>06</span>Mentions légales</a>
   </nav>
-  <div class="mm-foot"><a href="tel:+33637551256">06 37 55 12 56</a><a href="mailto:fr6gerardin@orange.fr">fr6gerardin@orange.fr</a><span>14 rue d’Andlau, 67000 Strasbourg</span></div>
+  <div class="mm-foot"><a href="tel:+33637551256">06 37 55 12 56</a><a href="mailto:fr6gerardin@orange.fr">fr6gerardin@orange.fr</a><span>14 rue d’Andlau, 67000 Strasbourg</span></div>
 </div>
 <main id="contenu" class="page-mentions">
 <svg class="thread" aria-hidden="true" focusable="false"><path class="thread-path"/><g class="thread-nib" style="opacity:0"><circle class="halo" r="10"/><circle r="3.6"/></g></svg>
 <section class="page-hero hero" aria-labelledby="ml-t">
-  <div class="wrap">
+  <div class="wrap ph-grid">
     <div class="ph-text">
       <p class="label" data-hero-fade><span class="tc">Informations légales</span><span>Modèle à compléter et à valider</span></p>
       <h1 id="ml-t" class="h1 split-hero" data-thread="0.02 0.4" data-thread-mobile="0.03">Mentions <em>légales</em></h1>
-      <p class="lead" data-hero-fade>Le site actuel n’en contient pas. Ce modèle reprend les rubriques habituelles d’un site professionnel ; les éléments surlignés restent à fournir.</p>
+      <p class="lead" data-hero-fade>Le site actuel n’en contient pas. Ce modèle reprend les rubriques habituelles d’un site professionnel ; les éléments surlignés restent à fournir.</p>
     </div>
+    <div class="ph-visual" data-hero-fade><figure class="ph ratio-43" data-sketch="carnet" data-grok="texture-papier" data-label="Croquis provisoire : carnet ouvert" role="img" aria-label="Croquis provisoire : carnet ouvert"><span class="ph-tag" aria-hidden="true" title="Image Grok à venir : texture-papier">Croquis provisoire</span></figure></div>
   </div>
 </section>
 
@@ -75,7 +80,7 @@
           <dt>Nom</dt><dd>Francis Gérardin, entrepreneur individuel (micro-entreprise)</dd>
           <dt>Activités</dt><dd>Animation d’événements, formation par l’improvisation, coaching personnel</dd>
           <dt>Adresse</dt><dd>14 rue d’Andlau, 67000 Strasbourg</dd>
-          <dt>Téléphone</dt><dd>06 37 55 12 56</dd>
+          <dt>Téléphone</dt><dd>06 37 55 12 56</dd>
           <dt>E-mail</dt><dd>fr6gerardin@orange.fr</dd>
           <dt>SIRET</dt><dd><span class="todo">numéro SIRET</span></dd>
           <dt>Directeur de la publication</dt><dd>Francis Gérardin <span class="todo is-confirm">à confirmer</span></dd>
@@ -90,7 +95,7 @@
       <section data-reveal>
         <h2>Photographies et visuels</h2>
         <p>Les photographies de Francis Gérardin et des ateliers proviennent de son site actuel. <span class="todo">noms des photographes et autorisations des personnes reconnaissables</span></p>
-        <p>Les images d’ambiance (salles, scènes, objets) sont des créations générées par intelligence artificielle ; aucune ne représente un événement ou un lieu réel de Francis Gérardin.</p>
+        <p>Les images d’ambiance (salles, scènes, objets) sont des créations générées par intelligence artificielle ; aucune ne représente un événement ou un lieu réel de Francis Gérardin.</p>
       </section>
       <section data-reveal>
         <h2>Données personnelles</h2>
@@ -98,9 +103,8 @@
       </section>
       <section data-reveal>
         <h2>Cookies</h2>
-        <p>Ce site enregistre seulement, dans votre navigateur, votre préférence d’affichage « Mode calme ». <span class="todo is-confirm">à vérifier lors de la mise en ligne, notamment si une mesure d’audience est ajoutée</span></p>
+        <p>Ce site enregistre seulement, dans votre navigateur, votre préférence d’affichage « Mode calme » et, le temps de la visite, le fait d’avoir déjà vu l’ouverture animée. <span class="todo is-confirm">à vérifier lors de la mise en ligne, notamment si une mesure d’audience est ajoutée</span></p>
       </section>
-      <figure class="ph ratio-169" data-sketch="carnet" data-grok="texture-papier" data-label="Croquis provisoire : carnet ouvert" role="img" aria-label="Croquis provisoire : carnet ouvert"><span class="ph-tag" aria-hidden="true">Visuel provisoire · image Grok « texture-papier »</span></figure>
     </div>
   </div>
 </section>
@@ -109,8 +113,9 @@
 <footer class="ft night" aria-labelledby="ft-t">
   <div class="wrap">
     <div class="ft-top">
-      <p class="kicker" id="ft-t">Un projet, une date, une question ? Écrivez-moi</p>
-      <a class="ft-phone" href="tel:+33637551256">06 37 55 12 56</a>
+      <p class="kicker" id="ft-t">Un projet, une date, une question ? Écrivez-moi</p>
+      <a class="ft-phone" href="tel:+33637551256" aria-label="Appeler le 06 37 55 12 56">06 37 55 12 56</a>
+      <p class="ft-sign hand">Je serai ravi d’échanger avec vous.</p>
       <div class="ft-lines"><a class="ink-link" href="mailto:fr6gerardin@orange.fr">fr6gerardin@orange.fr</a><span>14 rue d’Andlau, 67000 Strasbourg</span><a class="ink-link" href="https://www.facebook.com/francis.gerardin.pro" target="_blank" rel="noopener">Facebook</a><a class="ink-link" href="https://www.linkedin.com/in/francis-g%C3%A9rardin" target="_blank" rel="noopener">LinkedIn</a></div>
       <div class="btn-row"><a class="btn magnetic" href="contact.html">Envoyer un message <span class="arr">→</span></a></div>
     </div>

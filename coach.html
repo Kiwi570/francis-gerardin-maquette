@@ -7,18 +7,21 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Un allié pour transformer un problème en objectif précis, le plus souvent en 8 à 12 séances, à Strasbourg.">
 <meta name="theme-color" content="#EFEADF">
+<meta name="robots" content="noindex, nofollow">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Coach personnel · Francis Gérardin">
 <meta property="og:description" content="Un allié pour transformer un problème en objectif précis, le plus souvent en 8 à 12 séances, à Strasbourg.">
 <meta property="og:image" content="assets/img/francis-pensif-1200.webp">
 <meta property="og:locale" content="fr_FR">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="preload" href="assets/fonts/instrument-serif-regular.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="assets/fonts/newsreader-var.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="assets/fonts/plex-mono-regular.woff" as="font" type="font/woff" crossorigin>
 <link rel="stylesheet" href="assets/css/fonts.css">
 <link rel="stylesheet" href="assets/css/main.css">
 <script>(function(){var d=document.documentElement;d.classList.add('js');try{if(localStorage.getItem('fg-calme')==='1')d.classList.add('is-calm')}catch(e){}var r=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;var still=r||d.classList.contains('is-calm');try{if(!still&&sessionStorage.getItem('fg-flip')==='1')d.classList.add('play-flip');sessionStorage.removeItem('fg-flip')}catch(e){}})();</script>
+
 </head>
 <body>
 <a class="skip" href="#contenu">Aller au contenu</a>
@@ -36,11 +39,12 @@
       <a href="contact.html">Contact</a>
     </nav>
     <div class="hd-tools">
-      <a class="hd-phone" href="tel:+33637551256">06 37 55 12 56</a>
+      <a class="hd-phone" href="tel:+33637551256">06 37 55 12 56</a>
       <button class="calm-btn" type="button" data-calm-toggle aria-pressed="false" title="Réduire les animations"><svg viewBox="0 0 26 12" aria-hidden="true"><path class="wave" d="M1 6 C 5 0, 8 12, 13 6 S 21 0, 25 6"/><path class="flat" d="M1 6 L25 6"/></svg><span class="calm-txt">Mode calme</span></button>
       <button class="hd-burger" type="button" aria-expanded="false" aria-controls="menu-mobile" aria-label="Ouvrir le menu"><span></span><span></span></button>
     </div>
   </div>
+  <span class="hd-progress" aria-hidden="true"></span>
 </header>
 <div class="mm" id="menu-mobile" hidden>
   <nav class="mm-nav" aria-label="Navigation mobile">
@@ -52,16 +56,16 @@
     <a href="contact.html"><span>05</span>Contact</a>
     <a href="mentions-legales.html"><span>06</span>Mentions légales</a>
   </nav>
-  <div class="mm-foot"><a href="tel:+33637551256">06 37 55 12 56</a><a href="mailto:fr6gerardin@orange.fr">fr6gerardin@orange.fr</a><span>14 rue d’Andlau, 67000 Strasbourg</span></div>
+  <div class="mm-foot"><a href="tel:+33637551256">06 37 55 12 56</a><a href="mailto:fr6gerardin@orange.fr">fr6gerardin@orange.fr</a><span>14 rue d’Andlau, 67000 Strasbourg</span></div>
 </div>
 <main id="contenu" class="page-coach">
 <svg class="thread" aria-hidden="true" focusable="false"><path class="thread-path"/><g class="thread-nib" style="opacity:0"><circle class="halo" r="10"/><circle r="3.6"/></g></svg>
 <section class="page-hero hero" aria-labelledby="co-t">
   <div class="wrap ph-grid">
     <div class="ph-text">
-      <p class="label" data-hero-fade><span class="tc">8 à 12 séances</span><span>Coaching personnel</span></p>
+      <p class="label" data-hero-fade><span class="tc">8 à 12 séances</span><span>Coaching personnel</span></p>
       <h1 id="co-t" class="h1 split-hero" data-thread="0.02 0.4" data-thread-mobile="0.03">Coach <em>personnel</em></h1>
-      <p class="hero-corr correction" aria-label="Ni psy, ni guide, ni gourou : un allié.">
+      <p class="hero-corr correction"><span class="sr-only">Ni psy, ni guide, ni gourou : un allié.</span>
         <span aria-hidden="true">Ni</span><span class="corr" aria-hidden="true">psy<svg class="strike" viewBox="0 0 100 20" preserveAspectRatio="none" aria-hidden="true"><path d="M2 9 C 26 7, 58 13, 98 10 M96 15 C 70 15, 36 11, 5 13"/></svg></span><span aria-hidden="true">ni</span><span class="corr" aria-hidden="true">guide<svg class="strike" viewBox="0 0 100 20" preserveAspectRatio="none" aria-hidden="true"><path d="M2 10 C 26 3, 58 14, 98 6 M96 11 C 70 16, 36 7, 5 14"/></svg></span><span aria-hidden="true">ni</span><span class="corr" aria-hidden="true">gourou<svg class="strike" viewBox="0 0 100 20" preserveAspectRatio="none" aria-hidden="true"><path d="M2 9 C 26 6, 58 13, 98 9 M96 14 C 70 15, 36 10, 5 13"/></svg></span>
         <span class="ins" aria-hidden="true">un allié<svg class="ins-mark" viewBox="0 0 100 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 9 C 30 2, 64 12, 98 4"/></svg></span>
       </p>
@@ -89,34 +93,34 @@
     </div>
     <div class="pr-grid">
       <div class="pr-figs" aria-hidden="true">
-        <div class="pr-fig is-on"><figure class="ph " data-sketch="chemin" data-grok="coach-principe-objectif" data-label="Croquis provisoire : chemin en forêt vers une clairière" role="img" aria-label="Croquis provisoire : chemin en forêt vers une clairière"><span class="ph-tag" aria-hidden="true">Visuel provisoire · image Grok « coach-principe-objectif »</span></figure></div>
-        <div class="pr-fig"><figure class="ph " data-sketch="temps" data-grok="coach-principe-processus" data-label="Croquis provisoire : lumière de fin d’après-midi sur un carnet fermé" role="img" aria-label="Croquis provisoire : lumière de fin d’après-midi sur un carnet fermé"><span class="ph-tag" aria-hidden="true">Visuel provisoire · image Grok « coach-principe-processus »</span></figure></div>
-        <div class="pr-fig"><figure class="ph " data-sketch="carnet" data-grok="coach-principe-seances" data-label="Croquis provisoire : carnet ouvert, stylo et tasse" role="img" aria-label="Croquis provisoire : carnet ouvert, stylo et tasse"><span class="ph-tag" aria-hidden="true">Visuel provisoire · image Grok « coach-principe-seances »</span></figure></div>
-        <div class="pr-fig"><figure class="ph " data-sketch="dialogue" data-grok="coach-principe-dialogue" data-label="Croquis provisoire : deux chaises face à face autour d’une petite table" role="img" aria-label="Croquis provisoire : deux chaises face à face autour d’une petite table"><span class="ph-tag" aria-hidden="true">Visuel provisoire · image Grok « coach-principe-dialogue »</span></figure></div>
+        <div class="pr-fig is-on"><figure class="ph " data-sketch="chemin" data-grok="coach-principe-objectif" data-label="Croquis provisoire : chemin en forêt vers une clairière" role="img" aria-label="Croquis provisoire : chemin en forêt vers une clairière"><span class="ph-tag" aria-hidden="true" title="Image Grok à venir : coach-principe-objectif">Croquis provisoire</span></figure></div>
+        <div class="pr-fig"><figure class="ph " data-sketch="temps" data-grok="coach-principe-processus" data-label="Croquis provisoire : lumière de fin d’après-midi sur un carnet fermé" role="img" aria-label="Croquis provisoire : lumière de fin d’après-midi sur un carnet fermé"><span class="ph-tag" aria-hidden="true" title="Image Grok à venir : coach-principe-processus">Croquis provisoire</span></figure></div>
+        <div class="pr-fig"><figure class="ph " data-sketch="carnet" data-grok="coach-principe-seances" data-label="Croquis provisoire : carnet ouvert, stylo et tasse" role="img" aria-label="Croquis provisoire : carnet ouvert, stylo et tasse"><span class="ph-tag" aria-hidden="true" title="Image Grok à venir : coach-principe-seances">Croquis provisoire</span></figure></div>
+        <div class="pr-fig"><figure class="ph " data-sketch="dialogue" data-grok="coach-principe-dialogue" data-label="Croquis provisoire : deux chaises face à face autour d’une petite table" role="img" aria-label="Croquis provisoire : deux chaises face à face autour d’une petite table"><span class="ph-tag" aria-hidden="true" title="Image Grok à venir : coach-principe-dialogue">Croquis provisoire</span></figure></div>
       </div>
       <ol class="pr-items">
         <li class="pr-item is-on" data-thread="0.0 0.1">
           <span class="num">1 · Le point de départ</span>
           <h3 class="h2">Un objectif précis</h3>
-          <figure class="ph ph-m" data-sketch="chemin" data-grok="coach-principe-objectif" data-label="Croquis provisoire : chemin en forêt" role="img" aria-label="Croquis provisoire : chemin en forêt"><span class="ph-tag" aria-hidden="true">Visuel provisoire · image Grok « coach-principe-objectif »</span></figure>
+          <figure class="ph ph-m" data-sketch="chemin" data-grok="coach-principe-objectif" data-label="Croquis provisoire : chemin en forêt" role="img" aria-label="Croquis provisoire : chemin en forêt"><span class="ph-tag" aria-hidden="true" title="Image Grok à venir : coach-principe-objectif">Croquis provisoire</span></figure>
           <p>Transformer le problème qui vous occupe en un objectif spécifique, mesurable, réaliste et motivant, avec un horizon temporel proche, c’est commencer à le résoudre. Ainsi commence tout processus de coaching personnel.</p>
         </li>
         <li class="pr-item">
           <span class="num">2 · La durée</span>
           <h3 class="h2">Un processus limité dans le temps</h3>
-          <figure class="ph ph-m" data-sketch="temps" data-grok="coach-principe-processus" data-label="Croquis provisoire : carnet fermé dans la lumière" role="img" aria-label="Croquis provisoire : carnet fermé dans la lumière"><span class="ph-tag" aria-hidden="true">Visuel provisoire · image Grok « coach-principe-processus »</span></figure>
-          <p>L’accompagnement nécessite le plus souvent entre 8 et 12 séances, selon le but fixé et la situation initiale. Si le processus s’avère plus long que prévu, on peut le segmenter en plusieurs étapes, chacune avec son objectif, et s’accorder des pauses entre elles. Parfois, le processus est plus court : il peut alors déboucher sur l’identification d’un nouvel objectif.</p>
+          <figure class="ph ph-m" data-sketch="temps" data-grok="coach-principe-processus" data-label="Croquis provisoire : carnet fermé dans la lumière" role="img" aria-label="Croquis provisoire : carnet fermé dans la lumière"><span class="ph-tag" aria-hidden="true" title="Image Grok à venir : coach-principe-processus">Croquis provisoire</span></figure>
+          <p>L’accompagnement nécessite le plus souvent entre 8 et 12 séances, selon le but fixé et la situation initiale. Si le processus s’avère plus long que prévu, on peut le segmenter en plusieurs étapes, chacune avec son objectif, et s’accorder des pauses entre elles. Parfois, le processus est plus court : il peut alors déboucher sur l’identification d’un nouvel objectif.</p>
         </li>
         <li class="pr-item" data-thread="1.0 0.5">
           <span class="num">3 · Le rythme</span>
           <h3 class="h2">Des séances régulières</h3>
-          <figure class="ph ph-m" data-sketch="carnet" data-grok="coach-principe-seances" data-label="Croquis provisoire : carnet ouvert" role="img" aria-label="Croquis provisoire : carnet ouvert"><span class="ph-tag" aria-hidden="true">Visuel provisoire · image Grok « coach-principe-seances »</span></figure>
-          <p>Coach et accompagné conviennent de la fréquence des séances, d’une par semaine à une par quinzaine, en fonction du travail à faire. Fréquence qui peut varier au fil du suivi. Une séance dure généralement entre une heure et 90 minutes, selon ce qui y est travaillé. Le respect des rendez-vous et le maintien de la motivation sont essentiels pour le succès du processus.</p>
+          <figure class="ph ph-m" data-sketch="carnet" data-grok="coach-principe-seances" data-label="Croquis provisoire : carnet ouvert" role="img" aria-label="Croquis provisoire : carnet ouvert"><span class="ph-tag" aria-hidden="true" title="Image Grok à venir : coach-principe-seances">Croquis provisoire</span></figure>
+          <p>Coach et accompagné conviennent de la fréquence des séances, d’une par semaine à une par quinzaine, en fonction du travail à faire. Fréquence qui peut varier au fil du suivi. Une séance dure généralement entre une heure et 90 minutes, selon ce qui y est travaillé. Le respect des rendez-vous et le maintien de la motivation sont essentiels pour le succès du processus.</p>
         </li>
         <li class="pr-item">
           <span class="num">4 · La méthode</span>
           <h3 class="h2">Un dialogue dirigé</h3>
-          <figure class="ph ph-m" data-sketch="dialogue" data-grok="coach-principe-dialogue" data-label="Croquis provisoire : deux chaises face à face" role="img" aria-label="Croquis provisoire : deux chaises face à face"><span class="ph-tag" aria-hidden="true">Visuel provisoire · image Grok « coach-principe-dialogue »</span></figure>
+          <figure class="ph ph-m" data-sketch="dialogue" data-grok="coach-principe-dialogue" data-label="Croquis provisoire : deux chaises face à face" role="img" aria-label="Croquis provisoire : deux chaises face à face"><span class="ph-tag" aria-hidden="true" title="Image Grok à venir : coach-principe-dialogue">Croquis provisoire</span></figure>
           <p>Le coach s’appuie ponctuellement sur des exercices relevant de techniques de développement personnel, mais l’essentiel repose sur le dialogue qu’il instaure et dirige. Cet échange permet de progresser dans la perception de la situation et des enjeux.</p>
           <p>Le coach aide son client à relativiser l’importance des obstacles qui le gênent et à réévaluer celle des ressources qu’il connaît, voire à en découvrir de nouvelles. À partir du panel d’options qu’il a établi, le client peut élaborer le plan d’action par lequel il atteindra son objectif.</p>
         </li>
@@ -145,9 +149,9 @@
         </fieldset>
         <fieldset><legend class="flabel label" style="font-family: var(--f-mono); font-size: .72rem">Durée d’une séance</legend>
           <div class="chips">
-            <label class="chip"><input type="radio" name="cal-duree" value="60" checked><span>1 h</span></label>
-            <label class="chip"><input type="radio" name="cal-duree" value="75"><span>1 h 15</span></label>
-            <label class="chip"><input type="radio" name="cal-duree" value="90"><span>1 h 30</span></label>
+            <label class="chip"><input type="radio" name="cal-duree" value="60" checked><span>1 h</span></label>
+            <label class="chip"><input type="radio" name="cal-duree" value="75"><span>1 h 15</span></label>
+            <label class="chip"><input type="radio" name="cal-duree" value="90"><span>1 h 30</span></label>
           </div>
         </fieldset>
       </form>
@@ -155,8 +159,8 @@
         <p class="cal-result">…</p>
         <p class="cal-total"></p>
         <div class="cal-track" aria-hidden="true"></div>
-        <div class="cal-scale" aria-hidden="true"><span>1re séance</span><span>2 mois et demi</span><span>5 mois</span></div>
-        <p class="demo-note">Estimation indicative, calculée à partir des repères du coaching : 8 à 12 séances, une par semaine à une par quinzaine, d’une heure à 90 minutes.</p>
+        <div class="cal-scale" aria-hidden="true"><span>1re séance</span><span>2 mois et demi</span><span>5 mois</span></div>
+        <p class="demo-note">Estimation indicative, calculée à partir des repères du coaching : 8 à 12 séances, une par semaine à une par quinzaine, d’une heure à 90 minutes.</p>
       </div>
     </div>
   </div>
@@ -169,7 +173,7 @@
       <div class="body"><h2 id="ro-t" class="h2 split" data-thread="0.2 0.5" data-thread-mobile="0.03">Vous gardez <em>la main</em></h2></div>
     </div>
     <div class="role-grid">
-      <div data-reveal><h3 class="h3">Le chemin qui vous convient</h3><p>La réflexion, l’objectif, la décision et la motivation restent les vôtres : le coach vous aide à identifier votre chemin, sans le choisir à votre place.</p></div>
+      <div data-reveal><h3 class="h3">Le chemin qui vous convient</h3><p>La réflexion, l’objectif, la décision et la motivation restent les vôtres : le coach vous aide à identifier votre chemin, sans le choisir à votre place.</p></div>
       <div data-reveal><h3 class="h3">Les obstacles à leur juste place</h3><p>Relativiser l’importance des obstacles qui vous gênent, pour cesser de leur laisser toute la place.</p></div>
       <div data-reveal><h3 class="h3">Vos ressources</h3><p>Réévaluer celles que vous connaissez, en découvrir de nouvelles, puis bâtir votre propre plan d’action.</p></div>
     </div>
@@ -189,7 +193,7 @@
       <p class="kicker" data-thread="0.0 0.5" data-thread-mobile="0.03">Formation</p>
       <h2 id="dp-t" class="h2 split">Une formation <em>sérieuse</em></h2>
       <p class="lead">Point commun entre mes activités, des personnes y sollicitaient mes conseils au-delà de mon rôle attitré. Pour répondre à leurs attentes, j’ai suivi une formation de coach personnel.</p>
-      <span class="stamp blue"><span class="stamp-u">Diplôme d’école</span><b>« Coach professionnel »</b><span class="stamp-u">Institut de Coaching d’Alsace · Osthouse</span><span class="stamp-u">Octobre 2021 – avril 2022</span></span>
+      <span class="stamp blue"><span class="stamp-u">Diplôme d’école</span><b>« Coach professionnel »</b><span class="stamp-u">Institut de Coaching d’Alsace · Osthouse</span><span class="stamp-u">Octobre 2021 – avril 2022</span></span>
       <div class="tarif">
         <p class="label">Tarifs et lieu des séances</p>
         <p><span class="todo">tarif d’une séance, lieu des séances, possibilité de séances à distance</span></p>
@@ -202,12 +206,12 @@
   <div class="wrap">
     <div class="note sec-head">
       <div class="margin"><span class="label">Premier échange</span></div>
-      <div class="body"><h2 id="rdv-t" class="h2 split" data-thread="0.5 0.5" data-thread-mobile="0.03">Un <em>premier échange</em></h2><p class="lead">N’hésitez pas à me contacter, même si vous n’êtes pas sûr de recourir à mon accompagnement : je serai ravi d’échanger avec vous.</p></div>
+      <div class="body"><h2 id="rdv-t" class="h2 split" data-thread="0.5 0.5" data-thread-mobile="0.03">Un <em>premier échange</em></h2><p class="lead">N’hésitez pas à me contacter, même si vous n’êtes pas sûr de recourir à mon accompagnement : je serai ravi d’échanger avec vous.</p></div>
     </div>
     <div class="form-grid">
       <aside class="form-aside" data-reveal>
-        <figure class="ph " data-sketch="fauteuils" data-grok="accueil-public-particuliers" data-label="Croquis provisoire : deux fauteuils face à face près d’une fenêtre" role="img" aria-label="Croquis provisoire : deux fauteuils face à face près d’une fenêtre"><span class="ph-tag" aria-hidden="true">Visuel provisoire · image Grok « accueil-public-particuliers »</span></figure>
-        <p class="hero-phone">Par téléphone : <a href="tel:+33637551256" id="rdv-tel-n">06 37 55 12 56</a> <button type="button" class="copy" data-copy="06 37 55 12 56" data-copy-target="rdv-tel-n">Copier</button></p>
+        <figure class="ph " data-sketch="fauteuils" data-grok="accueil-public-particuliers" data-label="Croquis provisoire : deux fauteuils face à face près d’une fenêtre" role="img" aria-label="Croquis provisoire : deux fauteuils face à face près d’une fenêtre"><span class="ph-tag" aria-hidden="true" title="Image Grok à venir : accueil-public-particuliers">Croquis provisoire</span></figure>
+        <p class="hero-phone">Par téléphone : <a href="tel:+33637551256" id="rdv-tel-n">06 37 55 12 56</a> <button type="button" class="copy" data-copy="06 37 55 12 56" data-copy-target="rdv-tel-n">Copier</button></p>
       </aside>
       <div class="rdv-box" data-rdv>
         <div class="rdv-body">
@@ -216,7 +220,7 @@
           <div class="rdv-slots" role="group" aria-label="Créneaux"></div>
           <p class="demo-note">Créneaux fictifs pour la démonstration. <span class="todo">disponibilités réelles ou lien vers un agenda en ligne</span></p>
           <form class="rdv-form" hidden novalidate>
-            <p>Créneau choisi : <span class="rdv-chosen"></span></p>
+            <p>Créneau choisi : <span class="rdv-chosen"></span></p>
             <input type="hidden" id="rdv-creneau" name="creneau">
             <div class="field-row">
               <div class="field"><label for="rdv-nom">Nom *</label><input id="rdv-nom" name="nom" type="text" required autocomplete="name"></div>
@@ -230,8 +234,8 @@
         <div class="rdv-done" hidden tabindex="-1" role="status">
           <span class="stamp stamp-ok"><span class="stamp-u">Rendez-vous</span><span class="stamp-n">noté</span></span>
           <h3 class="h3">Merci, à bientôt.</h3>
-          <p>Créneau : <span class="rdv-done-label"></span></p>
-          <p class="demo-note">Démonstration : aucun rendez-vous n’a été enregistré ni envoyé.</p>
+          <p>Créneau : <span class="rdv-done-label"></span></p>
+          <p class="demo-note">Démonstration : aucun rendez-vous n’a été enregistré ni envoyé.</p>
           <button type="button" class="btn ghost" data-restart>Choisir un autre créneau</button>
         </div>
       </div>
@@ -243,8 +247,9 @@
 <footer class="ft night" aria-labelledby="ft-t">
   <div class="wrap">
     <div class="ft-top">
-      <p class="kicker" id="ft-t">Un projet, une date, une question ? Écrivez-moi</p>
-      <a class="ft-phone" href="tel:+33637551256">06 37 55 12 56</a>
+      <p class="kicker" id="ft-t">Un projet, une date, une question ? Écrivez-moi</p>
+      <a class="ft-phone" href="tel:+33637551256" aria-label="Appeler le 06 37 55 12 56">06 37 55 12 56</a>
+      <p class="ft-sign hand">Je serai ravi d’échanger avec vous.</p>
       <div class="ft-lines"><a class="ink-link" href="mailto:fr6gerardin@orange.fr">fr6gerardin@orange.fr</a><span>14 rue d’Andlau, 67000 Strasbourg</span><a class="ink-link" href="https://www.facebook.com/francis.gerardin.pro" target="_blank" rel="noopener">Facebook</a><a class="ink-link" href="https://www.linkedin.com/in/francis-g%C3%A9rardin" target="_blank" rel="noopener">LinkedIn</a></div>
       <div class="btn-row"><a class="btn magnetic" href="contact.html">Envoyer un message <span class="arr">→</span></a></div>
     </div>

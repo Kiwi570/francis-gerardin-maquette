@@ -15,7 +15,7 @@ export function initAgenda() {
     const avenir = list.filter(e => e.d >= today)
     const passees = list.filter(e => e.d < today).reverse()
     const item = (e, past) => `<li class="ag-item${past ? ' is-past' : ''}">
-        <time class="ag-date" datetime="${e.date}"><span class="ag-day">${e.d.getDate()}</span><span class="ag-month">${fmtDate(e.d, { month: 'short', year: 'numeric' })}</span></time>
+        <time class="ag-date" datetime="${e.date}"><span class="ag-day" data-count="${e.d.getDate()}">${e.d.getDate()}</span><span class="ag-month">${fmtDate(e.d, { month: 'short', year: 'numeric' })}</span></time>
         <div class="ag-body"><p class="ag-format">${esc(e.format)}${past ? ' · passé' : ''}</p><h4 class="ag-title">${esc(e.titre)}</h4><p class="ag-lieu">${esc(e.lieu)}</p>${e.note ? `<p class="ag-note">${esc(e.note)}</p>` : ''}</div></li>`
     el.innerHTML = `<div class="ag-col"><h3 class="ag-head">À venir <span class="ag-count">${avenir.length}</span></h3>${avenir.length ? `<ul class="ag-list">${avenir.map(e => item(e, false)).join('')}</ul>` : '<p class="ag-empty">Aucune date publiée pour l’instant. <span class="todo">Prochaines animations à compléter</span></p>'}</div>
       <div class="ag-col"><h3 class="ag-head">Passées <span class="ag-count">${passees.length}</span></h3><ul class="ag-list">${passees.map(e => item(e, true)).join('')}</ul><p class="ag-empty"><span class="todo">Liste des événements animés depuis 2016 à compléter</span></p></div>`
@@ -54,7 +54,7 @@ export function initFrise() {
       }).join('')
       return `<div class="fr-lane fr-${p.id}" style="height:${rows.length * RH + 6}px"><span class="fr-lane-name">${esc(p.nom)}</span>${html}</div>`
     }).join('')
-    el.innerHTML = `<div class="fr-scroll" data-frise-scroll tabindex="0" aria-label="Frise du parcours, de 1987 à aujourd’hui (défilement horizontal)"><div class="fr-inner" style="width:${W + 260}px">
+    el.innerHTML = `<div class="fr-scroll" data-frise-scroll tabindex="0" role="region" aria-label="Frise du parcours, de 1987 à aujourd’hui (défilement horizontal)"><div class="fr-inner" style="width:${W + 260}px">
       <div class="fr-years">${ticks}</div>${lanes}
       <span class="fr-limit" style="left:${x(LAST)}px"><span>Site actuel mis à jour fin 2022 · au-delà, à confirmer</span></span>
     </div></div>`
@@ -63,6 +63,8 @@ export function initFrise() {
 
 /* ---------- Formulaires en étapes (simulés) ---------- */
 export function initWizards() {
+  const iso = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+  $$('[data-min-today]').forEach(i => { i.min = iso(new Date()) })
   $$('[data-wizard]').forEach(form => {
     const steps = $$('.wz-step', form)
     const bar = $('.wz-bar', form)

@@ -203,7 +203,7 @@ export function initTrameField(wrap, gsap) {
   let last = 0
   gsap.ticker.add(t => {
     if (!visible) return
-    if (t - last < 1 / 45) return
+    if (t - last < 1 / 30) return
     last = t
     uniforms.uTime.value = t
     renderer.render({ scene: mesh })
