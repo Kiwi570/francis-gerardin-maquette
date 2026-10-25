@@ -93,7 +93,11 @@ void main() {
 const hex = h => { const n = parseInt(h.replace('#', ''), 16); return [(n >> 16 & 255) / 255, (n >> 8 & 255) / 255, (n & 255) / 255] }
 const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim()
 
+// WebGL testé à part : sans contexte, OGL écrit une erreur en console avant que l'on se replie
+const webglOk = (() => { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')) } catch (e) { return false } })()
+
 function makeRenderer(canvas) {
+  if (!webglOk) throw new Error('WebGL indisponible')
   const renderer = new Renderer({ canvas, dpr: Math.min(window.devicePixelRatio || 1, 2), alpha: false, antialias: false })
   return renderer
 }

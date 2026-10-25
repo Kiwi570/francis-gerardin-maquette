@@ -651,7 +651,9 @@ legend { font-family: var(--f-display); font-size: clamp(1.6rem, 1.2rem + 1.2vw,
 .pr-fig .ph, .pr-fig .frame { position: absolute; inset: 0 }
 .pr-fig.is-on { opacity: 1; transform: none }
 .pr-items { list-style: none; display: grid; gap: clamp(64px, 18vh, 200px); padding-block: 8vh 14vh; counter-reset: pr }
-.pr-item { display: grid; gap: 14px; opacity: .45; transition: opacity .5s }
+.pr-item { display: grid; gap: 14px; transition: opacity .5s }
+/* items inactifs : le texte reste lisible, seuls le numéro et le titre s'effacent */
+.pr-item:not(.is-on) :is(.num, .h2) { opacity: .5 }
 .pr-item.is-on { opacity: 1 }
 .pr-item .num { font-family: var(--f-mono); font-size: .8rem; color: var(--red); letter-spacing: .1em }
 .pr-item .h2 { font-size: clamp(2rem, 1.3rem + 2.4vw, 3.6rem) }
@@ -885,3 +887,22 @@ fieldset.sub > legend { margin: 6px 0 0; font-family: var(--f-mono); font-size: 
 .diplome-card .stamp { white-space: normal }
 @media (max-width: 520px) { .diplome-card .stamp { padding: 14px 14px; font-size: .68rem } .diplome-card .stamp b { font-size: 1.5rem } }
 .diplome-card .stamp { max-width: calc(100% - 18px) }
+
+/* ---------- Finitions (audit) ---------- */
+/* menu ouvert : la page ne défile plus, même sans Lenis */
+html.menu-open { overflow: hidden }
+.mm { overscroll-behavior: contain }
+/* en-tête « nuit » quand le menu (fond papier) est ouvert : texte et burger foncés */
+.menu-open .hd.on-night { color: var(--ink) }
+.menu-open .hd.on-night .hd-burger span { background: var(--ink) }
+.menu-open .hd.on-night .hd-role, .menu-open .hd.on-night .calm-btn { color: var(--ink-soft) }
+/* soulignement manuscrit : retour à la ligne permis sur les petits écrans (débordement à 320 px) */
+@media (max-width: 420px) { .u-hand { white-space: normal } .u-hand .hand-line { display: none } }
+/* ticker : pause au survol et au focus */
+.ticker:hover .ticker-track, .ticker:focus-within .ticker-track { animation-play-state: paused }
+/* héros Parcours : hauteur iOS */
+.field-hero { min-height: min(86svh, 860px) }
+/* cibles tactiles : 44 px */
+.calm-btn, .copy { min-height: 44px }
+.hd-burger { padding: 12px 9px; min-width: 44px; min-height: 44px }
+@media (pointer: coarse) { .mm-foot a, .ft-bottom a { display: inline-block; padding-block: 12px } }

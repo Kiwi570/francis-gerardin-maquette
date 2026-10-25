@@ -1,6 +1,6 @@
 /* Fonctionnalités : agenda, frise du parcours, formulaires en étapes (simulés),
    caucus d'impro, calendrier de coaching, prise de rendez-vous simulée, copie des coordonnées. */
-import { EVENEMENTS, PARCOURS, PISTES, CAUCUS } from './data.js'
+import { EVENEMENTS, PARCOURS, PISTES, CAUCUS } from './data.js?v=2'
 
 const $ = (s, r = document) => r.querySelector(s)
 const $$ = (s, r = document) => [...r.querySelectorAll(s)]
@@ -49,7 +49,7 @@ export function initFrise() {
         const solidEnd = it.fin ?? LAST
         const solidW = Math.max((solidEnd - it.debut) * ppy, 8)
         const dash = it.fin === null ? `<span class="fr-dash" style="left:${solidW.toFixed(1)}px;width:${((NOW - LAST) * ppy).toFixed(1)}px" title="Activité en cours en 2022, à confirmer aujourd’hui"></span>` : ''
-        const dates = `${Math.floor(it.debut)}${it.fin === null ? ' → ?' : (Math.floor(it.fin) !== Math.floor(it.debut) ? '–' + Math.floor(it.fin) : '')}`
+        const dates = `${Math.floor(it.debut)}${it.fin === null ? ' → ?' : (Math.floor(it.fin) !== Math.floor(it.debut) ? '–' + Math.floor(it.fin) : '')}`
         return `<div class="fr-item" style="left:${x(it.debut)}px;top:${r * RH}px" tabindex="0" title="${esc(it.titre)} · ${esc(it.lieu)}"><span class="fr-bar" style="width:${solidW.toFixed(1)}px"></span>${dash}<span class="fr-dates">${dates}</span><span class="fr-title">${esc(it.titre)}</span><span class="fr-lieu">${esc(it.lieu)}</span></div>`
       }).join('')
       return `<div class="fr-lane fr-${p.id}" style="height:${rows.length * RH + 6}px"><span class="fr-lane-name">${esc(p.nom)}</span>${html}</div>`
@@ -88,7 +88,7 @@ export function initWizards() {
       for (const f of fields) {
         if (!f.checkValidity()) {
           const name = f.closest('fieldset')?.querySelector('legend')?.textContent || 'ce champ'
-          err.textContent = f.type === 'radio' ? `Choisissez une option pour « ${name.trim()} ».` : (f.validity.typeMismatch ? 'Vérifiez l’adresse e-mail.' : `Merci de remplir le champ « ${(f.labels?.[0]?.textContent || name).replace('*', '').trim()} ».`)
+          err.textContent = f.type === 'radio' ? `Choisissez une option pour « ${name.trim()} ».` : (f.validity.typeMismatch ? 'Vérifiez l’adresse e-mail.' : `Merci de remplir le champ « ${(f.labels?.[0]?.textContent || name).replace('*', '').trim()} ».`)
           f.focus({ preventScroll: true })
           return false
         }
@@ -142,7 +142,7 @@ export function initContactForm() {
     form.addEventListener('submit', e => {
       e.preventDefault()
       const bad = $$('input, textarea, select', form).find(f => !f.checkValidity())
-      if (bad) { err.textContent = bad.validity.typeMismatch ? 'Vérifiez l’adresse e-mail.' : `Merci de remplir le champ « ${(bad.labels?.[0]?.textContent || '').replace('*', '').trim()} ».`; bad.focus(); return }
+      if (bad) { err.textContent = bad.validity.typeMismatch ? 'Vérifiez l’adresse e-mail.' : `Merci de remplir le champ « ${(bad.labels?.[0]?.textContent || '').replace('*', '').trim()} ».`; bad.focus(); return }
       err.textContent = ''
       $('.cf-body', form).hidden = true
       done.hidden = false
@@ -168,7 +168,7 @@ export function initCaucus(still) {
       const el = (now - t0) / 1000, left = Math.max(0, 20 - el)
       num.textContent = Math.ceil(left)
       if (ring) ring.style.strokeDashoffset = (C * (1 - left / 20)).toFixed(1)
-      if (left <= 0) { end('Fin du caucus : à vous de jouer !'); box.classList.add('is-go'); return }
+      if (left <= 0) { end('Fin du caucus : à vous de jouer !'); box.classList.add('is-go'); return }
       raf = requestAnimationFrame(tick)
     }
     btn.addEventListener('click', () => {
@@ -180,9 +180,9 @@ export function initCaucus(still) {
       out('joueurs').textContent = pick(CAUCUS.joueurs)
       out('duree').textContent = pick(CAUCUS.durees)
       box.classList.add('is-running')
-      status.textContent = 'Caucus en cours : 20 secondes pour vous préparer.'
+      status.textContent = 'Caucus en cours : 20 secondes pour vous préparer.'
       stop.hidden = false
-      btn.textContent = 'Tirer une autre situation'
+      if (btn.firstChild && btn.firstChild.nodeType === 3) btn.firstChild.nodeValue = 'Tirer une autre situation '; else btn.textContent = 'Tirer une autre situation'
       t0 = performance.now()
       if (still) { num.textContent = '20'; if (ring) ring.style.strokeDashoffset = 0 }
       raf = requestAnimationFrame(tick)
@@ -209,7 +209,7 @@ export function initCalendrier() {
       const mTxt = months < 1.5 ? 'un peu plus d’un mois' : `environ ${String(Math.round(months * 2) / 2).replace('.', ',')} mois`
       res.innerHTML = `<strong>${weeks} semaines</strong> entre la première et la dernière séance, soit ${mTxt}.`
       const mins = n * dur, h = Math.floor(mins / 60), m = mins % 60
-      tot.textContent = `${n} séances de ${dur === 60 ? '1 h' : dur === 90 ? '1 h 30' : '1 h 15'} : ${h} h${m ? ' ' + m : ''} de dialogue au total.`
+      tot.textContent = `${n} séances de ${dur === 60 ? '1 h' : dur === 90 ? '1 h 30' : '1 h 15'} : ${h} h${m ? ' ' + m : ''} de dialogue au total.`
       const maxDays = 11 * 14
       track.innerHTML = Array.from({ length: n }, (_, k) => `<span class="cal-dot" style="left:${((k * freq) / maxDays * 100).toFixed(2)}%"><span>${k + 1}</span></span>`).join('') +
         `<span class="cal-span" style="width:${(days / maxDays * 100).toFixed(2)}%"></span>`
@@ -254,7 +254,7 @@ export function initRdv() {
       e.preventDefault()
       const bad = $$('input', form).find(f => !f.checkValidity())
       const err = $('.wz-error', form)
-      if (bad) { err.textContent = `Merci de remplir le champ « ${(bad.labels?.[0]?.textContent || '').replace('*', '').trim()} ».`; bad.focus(); return }
+      if (bad) { err.textContent = `Merci de remplir le champ « ${(bad.labels?.[0]?.textContent || '').replace('*', '').trim()} ».`; bad.focus(); return }
       err.textContent = ''
       $('.rdv-done-label', box).textContent = hidden.value
       $('.rdv-body', box).hidden = true
@@ -276,7 +276,7 @@ export function initCopy() {
       const fallback = () => {
         const target = document.getElementById(btn.dataset.copyTarget)
         if (target) { const r = document.createRange(); r.selectNodeContents(target); const s = getSelection(); s.removeAllRanges(); s.addRange(r) }
-        btn.textContent = 'Sélectionné : copiez'
+        btn.textContent = 'Sélectionné : copiez'
         setTimeout(() => { btn.textContent = orig }, 2200)
       }
       try { navigator.clipboard.writeText(text).then(ok, fallback) } catch { fallback() }

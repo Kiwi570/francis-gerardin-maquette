@@ -67,7 +67,7 @@ export function buildRoute(el) {
     return `<g class="rt-city${hot}" data-city="${e.id}" transform="translate(${x.toFixed(1)} ${y.toFixed(1)})"><circle class="rt-ring" r="17"/><circle class="rt-dot" r="7"/><text x="${lab[0]}" y="${lab[1] - 26}" class="rt-name" text-anchor="${anchor}">${e.name}</text><text x="${lab[0]}" y="${lab[1]}" class="rt-years" text-anchor="${anchor}">${e.years}</text><text x="${lab[0]}" y="${lab[1] + 26}" class="rt-desc" text-anchor="${anchor}">${e.desc}</text></g>`
   }).join('')
 
-  el.innerHTML = `<svg class="rt-svg" viewBox="0 0 1000 900" role="img" aria-labelledby="${el.id}-t"><title id="${el.id}-t">Croquis de route : Rueil-Malmaison, Saint-Dié-des-Vosges, Nancy, Metz, Strasbourg et Osthouse</title>
+  el.innerHTML = `<svg class="rt-svg" viewBox="0 0 1000 900" role="img" aria-labelledby="${el.id}-t"><title id="${el.id}-t">Croquis de route : Rueil-Malmaison, Saint-Dié-des-Vosges, Nancy, Metz, Strasbourg et Osthouse</title>
     <g class="rt-grid">${Array.from({ length: 9 }, (_, i) => `<line x1="0" x2="1000" y1="${i * 100 + 50}" y2="${i * 100 + 50}"/>`).join('')}</g>
     <g class="rt-geo">${rivers}${mountains}<text class="rt-region" x="${vx.toFixed(0)}" y="${vy.toFixed(0)}">Vosges</text><text class="rt-region rt-de" x="975" y="820">Allemagne</text></g>
     <path class="rt-route" d="${route}"/>

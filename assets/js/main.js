@@ -1,8 +1,8 @@
 /* Francis Gérardin · maquette « Carnet de route »
    Mouvement : GSAP + ScrollTrigger + SplitText + DrawSVG, défilement Lenis, trame offset WebGL. */
 import { drawSketches } from './sketch.js'
-import { buildRoute } from './route.js'
-import { initAgenda, initFrise, initWizards, initContactForm, initCaucus, initCalendrier, initRdv, initCopy } from './interactions.js'
+import { buildRoute } from './route.js?v=2'
+import { initAgenda, initFrise, initWizards, initContactForm, initCaucus, initCalendrier, initRdv, initCopy } from './interactions.js?v=2'
 
 const $ = (s, r = document) => r.querySelector(s)
 const $$ = (s, r = document) => [...r.querySelectorAll(s)]
@@ -43,13 +43,29 @@ $$('[data-calm-toggle]').forEach(btn => {
 /* ---------- Menu mobile ---------- */
 const burger = $('.hd-burger'), menu = $('#menu-mobile')
 if (burger && menu) {
-  const close = () => { burger.setAttribute('aria-expanded', 'false'); menu.hidden = true; root.classList.remove('menu-open') }
+  menu.setAttribute('data-lenis-prevent', '')
+  const horsMenu = on => $$('body > main, body > footer, body > .skip').forEach(x => { x.inert = on })
+  const close = () => {
+    burger.setAttribute('aria-expanded', 'false'); burger.setAttribute('aria-label', 'Ouvrir le menu')
+    menu.hidden = true; root.classList.remove('menu-open'); horsMenu(false); window.__lenis?.start()
+  }
   burger.addEventListener('click', () => {
     const open = burger.getAttribute('aria-expanded') !== 'true'
-    burger.setAttribute('aria-expanded', String(open)); menu.hidden = !open; root.classList.toggle('menu-open', open)
-    if (open) menu.querySelector('a')?.focus()
+    if (!open) { close(); return }
+    burger.setAttribute('aria-expanded', 'true'); burger.setAttribute('aria-label', 'Fermer le menu')
+    menu.hidden = false; root.classList.add('menu-open'); horsMenu(true); window.__lenis?.stop()
+    menu.querySelector('a')?.focus()
   })
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !menu.hidden) { close(); burger.focus() } })
+  document.addEventListener('keydown', e => {
+    if (menu.hidden) return
+    if (e.key === 'Escape') { close(); burger.focus(); return }
+    if (e.key !== 'Tab') return
+    const f = [burger, ...$$('a[href], button:not([disabled])', menu)]
+    const i = f.indexOf(document.activeElement)
+    if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus() }
+    else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus() }
+  })
+  window.addEventListener('pageshow', e => { if (e.persisted && !menu.hidden) close() })
   $$('a', menu).forEach(a => a.addEventListener('click', close))
 }
 
@@ -173,11 +189,14 @@ function run() {
   $$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
     const id = a.getAttribute('href')
     if (id.length < 2) return
-    const target = $(id)
+    let target = null
+    try { target = document.getElementById(decodeURIComponent(id.slice(1))) } catch (er) { /* ancre invalide */ }
     if (!target) return
     e.preventDefault()
     lenis ? lenis.scrollTo(target, { offset: -90, duration: 1.2 }) : target.scrollIntoView({ behavior: 'smooth' })
     history.replaceState(null, '', id)
+    if (!target.matches('a, button, input, select, textarea, [tabindex]')) target.setAttribute('tabindex', '-1')
+    target.focus({ preventScroll: true })
   }))
 
   /* Transition « page tournée » */
@@ -191,6 +210,9 @@ function run() {
       if (!href || href.startsWith('#') || a.target === '_blank' || /^(mailto|tel|https?):/.test(href) || a.hasAttribute('download')) return
       a.addEventListener('click', e => {
         if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return
+        const norm = p => p.replace(/\/index(\.html)?$/, '/').replace(/\.html$/, '')
+        const u = new URL(a.href)
+        if (norm(u.pathname) === norm(location.pathname) && !u.hash && u.search === location.search) { e.preventDefault(); lenis ? lenis.scrollTo(0) : window.scrollTo(0, 0); return }
         e.preventDefault()
         store.sset('fg-flip', '1')
         flip.classList.remove('is-gone')
@@ -233,7 +255,7 @@ function run() {
     const title = $$('.hero .split-hero', hero)
     title.forEach(t => {
       if (!SplitText) return
-      const s = new SplitText(t, { type: 'lines,words', mask: 'lines', linesClass: 'ln' })
+      const s = new SplitText(t, { type: 'lines,words', mask: 'lines', linesClass: 'ln', aria: 'none' })
       heroStart.from(s.lines, { yPercent: 108, duration: 1, stagger: 0.09, ease: 'expo.out' }, 0)
     })
     heroStart.from($$('.hero [data-hero-fade]', hero), { y: 18, autoAlpha: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out' }, 0.25)
@@ -262,7 +284,7 @@ function run() {
   const glPhoto = $('[data-gl="halftone"]')
   const glField = $('[data-gl="field"]')
   if (glPhoto || glField) {
-    import('./webgl.js').then(({ initHalftonePhoto, initTrameField }) => {
+    import('./webgl.js?v=2').then(({ initHalftonePhoto, initTrameField }) => {
       if (glPhoto) {
         const img = $('img', glPhoto)
         const start = () => {
@@ -282,7 +304,7 @@ function run() {
   /* Titres de sections ligne à ligne */
   if (SplitText) {
     $$('.split').forEach(el => {
-      const s = new SplitText(el, { type: 'lines', mask: 'lines', linesClass: 'ln' })
+      const s = new SplitText(el, { type: 'lines', mask: 'lines', linesClass: 'ln', aria: 'none' })
       gsap.from(s.lines, { yPercent: 105, duration: 1, stagger: 0.08, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 90%', once: true } })
     })
   }
@@ -379,6 +401,7 @@ function run() {
       const cards = $$('.stack-card', sec)
       if (cards.length < 2) return
       sec.classList.add('is-pinned')
+      if (cards.some(c => c.scrollHeight > c.clientHeight + 2)) { sec.classList.remove('is-pinned'); return }
       gsap.set(cards.slice(1), { yPercent: 115, rotate: i => (i % 2 ? -3 : 3) })
       const tl = gsap.timeline({ scrollTrigger: { trigger: sec, start: 'top top', end: () => '+=' + window.innerHeight * (cards.length - 1) * 0.9, pin: true, scrub: 0.7, anticipatePin: 1 } })
       cards.slice(1).forEach((c, i) => {
@@ -412,7 +435,7 @@ function run() {
       const steps = $$('.mt-step', sec), checks = $$('.mt-q', sec)
       gsap.set($$('.mt-bar', sec), { scaleX: 0, transformOrigin: 'left center' })
       const tl = gsap.timeline({ scrollTrigger: { trigger: sec, start: 'top top', end: () => '+=' + window.innerHeight * 1.8, pin: true, scrub: 0.5, anticipatePin: 1 } })
-      steps.forEach((s, i) => tl.fromTo(s, { autoAlpha: 0.25 }, { autoAlpha: 1, duration: 0.5 }, i * 0.7).to($('.mt-bar', s), { scaleX: 1, duration: 0.6 }, i * 0.7))
+      steps.forEach((s, i) => tl.fromTo(s, { autoAlpha: 0.55 }, { autoAlpha: 1, duration: 0.5 }, i * 0.7).to($('.mt-bar', s), { scaleX: 1, duration: 0.6 }, i * 0.7))
       checks.forEach((c, i) => tl.from($('.mt-tick path', c), { drawSVG: '0%', duration: 0.25 }, 2 + i * 0.25).fromTo(c, { autoAlpha: 0.35 }, { autoAlpha: 1, duration: 0.2 }, 2 + i * 0.25))
     }
     const cleanups = []
@@ -484,7 +507,7 @@ function run() {
   /* Pied de page : le numéro s'écrit */
   const ftPhone = $('.ft-phone')
   if (ftPhone && SplitText) {
-    const sp = new SplitText(ftPhone, { type: 'chars', charsClass: 'char' })
+    const sp = new SplitText(ftPhone, { type: 'chars', charsClass: 'char', aria: 'none' })
     const tl = gsap.timeline({ scrollTrigger: { trigger: ftPhone, start: 'top 92%', once: true } })
     tl.from(sp.chars, { yPercent: 80, rotate: 8, autoAlpha: 0, duration: 0.7, stagger: 0.035, ease: 'back.out(2)' })
     const sign = $('.ft-sign')
