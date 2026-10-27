@@ -1,8 +1,8 @@
 /* Francis Gérardin · maquette « Carnet de route »
    Mouvement : GSAP + ScrollTrigger + SplitText + DrawSVG, défilement Lenis, trame offset WebGL. */
-import { drawSketches } from './sketch.js'
-import { buildRoute } from './route.js?v=2'
-import { initAgenda, initFrise, initWizards, initContactForm, initCaucus, initCalendrier, initRdv, initCopy } from './interactions.js?v=2'
+import { drawSketches } from './sketch.js?v=20261027'
+import { buildRoute } from './route.js?v=20261027'
+import { initAgenda, initFrise, initWizards, initContactForm, initCaucus, initCalendrier, initRdv, initCopy } from './interactions.js?v=20261027'
 
 const $ = (s, r = document) => r.querySelector(s)
 const $$ = (s, r = document) => [...r.querySelectorAll(s)]
@@ -284,7 +284,7 @@ function run() {
   const glPhoto = $('[data-gl="halftone"]')
   const glField = $('[data-gl="field"]')
   if (glPhoto || glField) {
-    import('./webgl.js?v=2').then(({ initHalftonePhoto, initTrameField }) => {
+    import('./webgl.js?v=20261027').then(({ initHalftonePhoto, initTrameField }) => {
       if (glPhoto) {
         const img = $('img', glPhoto)
         const start = () => {

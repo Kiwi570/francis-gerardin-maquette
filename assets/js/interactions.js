@@ -1,6 +1,6 @@
 /* Fonctionnalités : agenda, frise du parcours, formulaires en étapes (simulés),
    caucus d'impro, calendrier de coaching, prise de rendez-vous simulée, copie des coordonnées. */
-import { EVENEMENTS, PARCOURS, PISTES, CAUCUS } from './data.js?v=2'
+import { EVENEMENTS, PARCOURS, PISTES, CAUCUS } from './data.js?v=20261027'
 
 const $ = (s, r = document) => r.querySelector(s)
 const $$ = (s, r = document) => [...r.querySelectorAll(s)]
