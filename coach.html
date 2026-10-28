@@ -20,8 +20,8 @@
 <link rel="preload" href="assets/fonts/instrument-serif-regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/newsreader-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/plex-mono-regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/fonts.css?v=20261028">
-<link rel="stylesheet" href="assets/css/main.css?v=20261028">
+<link rel="stylesheet" href="assets/css/fonts.css?v=20261028-2">
+<link rel="stylesheet" href="assets/css/main.css?v=20261028-2">
 <script>(function(){var d=document.documentElement;d.classList.add('js');try{if(localStorage.getItem('fg-calme')==='1')d.classList.add('is-calm')}catch(e){}var r=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;var still=r||d.classList.contains('is-calm');try{if(!still&&sessionStorage.getItem('fg-flip')==='1')d.classList.add('play-flip');sessionStorage.removeItem('fg-flip')}catch(e){}})();</script>
 
 </head>
@@ -143,13 +143,13 @@
           <label for="cal-seances">Nombre de séances</label>
           <div style="display:flex; align-items:center; gap:16px"><output class="cal-n" for="cal-seances">10</output><input id="cal-seances" type="range" min="8" max="12" step="1" value="10"></div>
         </div>
-        <fieldset><legend class="flabel label" style="font-family: var(--f-mono); font-size: .72rem">Fréquence</legend>
+        <fieldset><legend class="flabel label" style="font-family: var(--f-mono); font-size: max(12px, .72rem)">Fréquence</legend>
           <div class="chips">
             <label class="chip"><input type="radio" name="cal-freq" value="7" checked><span>Chaque semaine</span></label>
             <label class="chip"><input type="radio" name="cal-freq" value="14"><span>Toutes les deux semaines</span></label>
           </div>
         </fieldset>
-        <fieldset><legend class="flabel label" style="font-family: var(--f-mono); font-size: .72rem">Durée d’une séance</legend>
+        <fieldset><legend class="flabel label" style="font-family: var(--f-mono); font-size: max(12px, .72rem)">Durée d’une séance</legend>
           <div class="chips">
             <label class="chip"><input type="radio" name="cal-duree" value="60" checked><span>1 h</span></label>
             <label class="chip"><input type="radio" name="cal-duree" value="75"><span>1 h 15</span></label>
@@ -269,6 +269,6 @@
 <script src="assets/vendor/gsap/ScrambleTextPlugin.min.js" defer></script>
 <script src="assets/vendor/gsap/CustomEase.min.js" defer></script>
 <script src="assets/vendor/lenis/lenis.js" defer></script>
-<script type="module" src="assets/js/main.js?v=20261028"></script>
+<script type="module" src="assets/js/main.js?v=20261028-2"></script>
 </body>
 </html>

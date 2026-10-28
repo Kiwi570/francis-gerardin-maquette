@@ -1,8 +1,8 @@
 /* Francis Gérardin · maquette « Carnet de route »
    Mouvement : GSAP + ScrollTrigger + SplitText + DrawSVG, défilement Lenis, trame offset WebGL. */
-import { drawSketches } from './sketch.js?v=20261028'
-import { buildRoute } from './route.js?v=20261028'
-import { initAgenda, initFrise, initWizards, initContactForm, initCaucus, initCalendrier, initRdv, initCopy } from './interactions.js?v=20261028'
+import { drawSketches } from './sketch.js?v=20261028-2'
+import { buildRoute } from './route.js?v=20261028-2'
+import { initAgenda, initFrise, initWizards, initContactForm, initCaucus, initCalendrier, initRdv, initCopy } from './interactions.js?v=20261028-2'
 
 const $ = (s, r = document) => r.querySelector(s)
 const $$ = (s, r = document) => [...r.querySelectorAll(s)]
@@ -74,6 +74,32 @@ const header = $('.hd')
 const onScrollHeader = y => header && header.classList.toggle('is-scrolled', y > 24)
 onScrollHeader(window.scrollY)
 window.addEventListener('scroll', () => onScrollHeader(window.scrollY), { passive: true })
+/* hauteur réelle de l'en-tête (sections épinglées) */
+const setEnteteH = () => header && root.style.setProperty('--entete-h', Math.round(header.getBoundingClientRect().bottom) + 'px')
+setEnteteH()
+header && new ResizeObserver(setEnteteH).observe(header)
+window.addEventListener('resize', setEnteteH)
+
+/* ---------- Barre du bas (téléphone) ---------- */
+const nf = $('.nf')
+if (!nf && !/contact(\.html)?$/.test(location.pathname)) {
+  const barre = document.createElement('nav')
+  barre.className = 'barre'
+  barre.setAttribute('aria-label', 'Contact rapide')
+  barre.innerHTML = '<a class="btn ghost" href="tel:+33637551256">Appeler</a><a class="btn" href="contact.html">Me contacter</a>'
+  document.body.append(barre)
+  root.classList.add('has-barre')
+  const setBarresH = () => root.style.setProperty('--barres-h', barre.offsetHeight + 'px')
+  setBarresH()
+  new ResizeObserver(setBarresH).observe(barre)
+  const heroEl = $('.hero'), blockers = $$('footer, form, .rdv-box')
+  const seen = new Set()
+  let heroPassed = !heroEl
+  const sync = () => barre.classList.toggle('is-on', heroPassed && seen.size === 0)
+  if (heroEl) new IntersectionObserver(([e]) => { heroPassed = !e.isIntersecting && e.boundingClientRect.top < 0; sync() }).observe(heroEl)
+  const io = new IntersectionObserver(es => { es.forEach(e => e.isIntersecting ? seen.add(e.target) : seen.delete(e.target)); sync() })
+  blockers.forEach(b => io.observe(b))
+}
 
 /* ---------- Fil d'encre ---------- */
 function buildThread() {
@@ -229,8 +255,8 @@ function run() {
     store.sset('fg-intro', '1')
     const tc = $('.intro-tc', intro)
     const counter = { f: 0 }
-    const tl = gsap.timeline({ defaults: { ease: 'power2.out' }, onComplete: () => { intro.remove(); heroStart.play() } })
-    tl.to(counter, { f: 2 * 25 + 12, duration: 2.1, ease: 'none', onUpdate: () => {
+    const tl = gsap.timeline({ defaults: { ease: 'power2.out' }, onComplete: () => { intro.remove(); heroStart.paused() && heroStart.play() } })
+    tl.to(counter, { f: 2 * 25 + 12, duration: 1.6, ease: 'none', onUpdate: () => {
       const f = Math.round(counter.f), s = Math.floor(f / 25), fr = f % 25
       tc.textContent = `00:00:${String(s).padStart(2, '0')}:${String(fr).padStart(2, '0')}`
     } }, 0)
@@ -238,8 +264,9 @@ function run() {
       .from('.intro-row', { x: -24, autoAlpha: 0, stagger: 0.2, duration: 0.45 }, 0.25)
       .from('.intro-check', { scale: 0, rotate: -40, stagger: 0.2, duration: 0.35, ease: 'back.out(3)' }, 0.6)
       .from('.intro-dots', { scaleX: 0, transformOrigin: 'left center', stagger: 0.2, duration: 0.4 }, 0.35)
-      .to('.intro-sheet', { yPercent: -112, rotateX: 16, duration: 0.75, ease: 'power3.inOut' }, 2.05)
-      .to(intro, { autoAlpha: 0, duration: 0.3 }, 2.55)
+      .to('.intro-sheet', { yPercent: -112, rotateX: 16, duration: 0.7, ease: 'power3.inOut' }, 1.5)
+      .to(intro, { autoAlpha: 0, duration: 0.3 }, 1.9)
+      .add(() => heroStart.play(), 1.6)
     const skip = () => { if (tl.progress() < 1) tl.progress(1) }
     intro.addEventListener('click', skip)
     window.addEventListener('keydown', skip, { once: true })
@@ -284,7 +311,7 @@ function run() {
   const glPhoto = $('[data-gl="halftone"]')
   const glField = $('[data-gl="field"]')
   if (glPhoto || glField) {
-    import('./webgl.js?v=20261028').then(({ initHalftonePhoto, initTrameField }) => {
+    import('./webgl.js?v=20261028-2').then(({ initHalftonePhoto, initTrameField }) => {
       if (glPhoto) {
         const img = $('img', glPhoto)
         const start = () => {
@@ -360,7 +387,11 @@ function run() {
   if (ScrambleTextPlugin) {
     $$('[data-scramble]').forEach((el, i) => {
       const txt = el.textContent
-      gsap.to(el, { scrambleText: { text: txt, chars: 'abcdefghijklmnopqrstuvwxyzéèàç', revealDelay: 0.25, speed: 0.6 }, duration: 1.3, delay: 0.3 + i * 0.12, scrollTrigger: { trigger: el, start: 'top 95%', once: true } })
+      /* double invisible : la largeur du mot ne bouge plus pendant le brouillage */
+      el.innerHTML = '<span class="w-ghost" aria-hidden="true"></span><span class="w-live"></span>'
+      el.firstChild.textContent = txt
+      el.lastChild.textContent = txt
+      gsap.to(el.lastChild, { scrambleText: { text: txt, chars: 'abcdefghijklmnopqrstuvwxyzéèàç', revealDelay: 0.25, speed: 0.6 }, duration: 1.3, delay: 0.3 + i * 0.12, scrollTrigger: { trigger: el, start: 'top 95%', once: true } })
     })
   }
 
@@ -403,7 +434,7 @@ function run() {
       sec.classList.add('is-pinned')
       if (cards.some(c => c.scrollHeight > c.clientHeight + 2)) { sec.classList.remove('is-pinned'); return }
       gsap.set(cards.slice(1), { yPercent: 115, rotate: i => (i % 2 ? -3 : 3) })
-      const tl = gsap.timeline({ scrollTrigger: { trigger: sec, start: 'top top', end: () => '+=' + window.innerHeight * (cards.length - 1) * 0.9, pin: true, scrub: 0.7, anticipatePin: 1 } })
+      const tl = gsap.timeline({ scrollTrigger: { trigger: sec, start: 'top top', end: () => '+=' + window.innerHeight * (cards.length - 1) * 0.9, pin: true, scrub: 0.7 } })
       cards.slice(1).forEach((c, i) => {
         tl.to(c, { yPercent: 0, rotate: (i % 2 ? -1.2 : 1.2), duration: 1, ease: 'power2.out' }, i)
           .fromTo(cards[i], { scale: 1, '--dim': 0 }, { scale: 0.93, '--dim': 1, duration: 1 }, i)
@@ -422,19 +453,36 @@ function run() {
       if (!track) return
       if (sec.classList.contains('frise-sec') && window.innerHeight < 860) return
       sec.classList.add('is-pinned')
+      /* photos à la hauteur disponible, légende comprise */
+      const scroller = $('.h-scroller', sec), items = $$('.h-item', sec)
+      const fit = () => {
+        if (!sec.classList.contains('is-pinned') || sec.classList.contains('frise-sec')) return
+        for (let pass = 0; pass < 2; pass++) {
+          if (pass === 0) items.forEach(it => it.style.removeProperty('--fit-w'))
+          const avail = scroller.clientHeight
+          items.forEach(it => {
+            const fr = $('.frame', it)
+            if (!fr || !fr.offsetHeight) return
+            const room = avail - (it.offsetHeight - fr.offsetHeight)
+            if (fr.offsetHeight > room) it.style.setProperty('--fit-w', Math.floor(Math.max(120, room) * fr.offsetWidth / fr.offsetHeight) + 'px')
+          })
+        }
+      }
+      fit()
+      ScrollTrigger.addEventListener('refreshInit', fit)
       const dist = () => Math.max(0, track.scrollWidth - sec.clientWidth + 40)
       const counter = $('[data-year]', sec)
       gsap.to(track, {
         x: () => -dist(), ease: 'none',
-        scrollTrigger: { trigger: sec, start: 'top top', end: () => '+=' + dist(), pin: true, scrub: 0.6, invalidateOnRefresh: true, anticipatePin: 1,
+        scrollTrigger: { trigger: sec, start: 'top top', end: () => '+=' + dist(), pin: true, scrub: 0.6, invalidateOnRefresh: true,
           onUpdate: s => { if (counter) counter.textContent = Math.round(1987 + s.progress * 39.8) } },
       })
-      return () => sec.classList.remove('is-pinned')
+      return () => { sec.classList.remove('is-pinned'); ScrollTrigger.removeEventListener('refreshInit', fit) }
     }
     const initM = sec => {
       const steps = $$('.mt-step', sec), checks = $$('.mt-q', sec)
       gsap.set($$('.mt-bar', sec), { scaleX: 0, transformOrigin: 'left center' })
-      const tl = gsap.timeline({ scrollTrigger: { trigger: sec, start: 'top top', end: () => '+=' + window.innerHeight * 1.8, pin: true, scrub: 0.5, anticipatePin: 1 } })
+      const tl = gsap.timeline({ scrollTrigger: { trigger: sec, start: 'top top', end: () => '+=' + window.innerHeight * 1.8, pin: true, scrub: 0.5 } })
       steps.forEach((s, i) => tl.fromTo(s, { autoAlpha: 0.55 }, { autoAlpha: 1, duration: 0.5 }, i * 0.7).to($('.mt-bar', s), { scaleX: 1, duration: 0.6 }, i * 0.7))
       checks.forEach((c, i) => tl.from($('.mt-tick path', c), { drawSVG: '0%', duration: 0.25 }, 2 + i * 0.25).fromTo(c, { autoAlpha: 0.35 }, { autoAlpha: 1, duration: 0.2 }, 2 + i * 0.25))
     }
